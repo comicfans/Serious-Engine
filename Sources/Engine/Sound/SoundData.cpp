@@ -260,6 +260,5 @@ void CSoundData::AddReference(void)
 // Remove one reference
 void CSoundData::RemReference(void)
 {
-  ASSERT(this!=NULL);
   _pSoundStock->Release(this);
 }

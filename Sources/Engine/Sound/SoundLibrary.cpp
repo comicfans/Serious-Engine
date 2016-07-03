@@ -1233,7 +1233,6 @@ BOOL CSoundLibrary::SetEnvironment( INDEX iEnvNo, FLOAT fEnvSize/*=0*/)
 // mute all sounds (erase playing buffer(s) and supress mixer)
 void CSoundLibrary::Mute(void)
 {
-  ASSERT(this!=NULL);
   // stop all IFeel effects
   IFeel_StopEffect(NULL);
 

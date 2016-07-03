@@ -27,6 +27,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <Engine/Base/ListIterator.inl>
 #include <Engine/Templates/DynamicArray.cpp>
 
+#include <cassert>
+
 /*
  * One animation of an animateable object
  */
@@ -173,13 +175,11 @@ BOOL CAnimData::IsAutoFreed(void)
 // Reference counting functions
 void CAnimData::AddReference(void)
 {
-  ASSERT(this!=NULL);
   MarkUsed();
 }
 
 void CAnimData::RemReference(void)
 {
-  ASSERT(this!=NULL);
   RemReference_internal();
 }
 
@@ -615,7 +615,9 @@ CAnimObject::CAnimObject(void)
 /* Destructor. */
 CAnimObject::~CAnimObject(void)
 {
-  ao_AnimData->RemReference();
+    if (ao_AnimData) {
+        ao_AnimData->RemReference();
+    }
 }
 
 // copy from another object of same class
@@ -818,9 +820,13 @@ BOOL CAnimObject::IsUpToDate(const CUpdateable &ud) const
 void CAnimObject::SetData(CAnimData *pAD)
 {
   // mark new data as referenced once more
-  pAD->AddReference();
+  if (pAD) {
+      pAD->AddReference();
+  }
   // mark old data as referenced once less
-  ao_AnimData->RemReference();
+  if(ao_AnimData){
+      ao_AnimData->RemReference();
+  }
   // remember new data
   ao_AnimData = pAD;
   if( pAD != NULL) StartAnim( 0);

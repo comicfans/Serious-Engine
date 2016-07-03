@@ -242,7 +242,9 @@ void CSoundObject::Play_internal( CSoundData *pCsdLink, SLONG slFlags)
   // mark new data as referenced once more
   pCsdLink->AddReference();
   // mark old data as referenced once less
-  so_pCsdLink->RemReference();
+  if(so_pCsdLink){
+      so_pCsdLink->RemReference();
+  }
 
   // store init SoundData
   so_pCsdLink = pCsdLink;
